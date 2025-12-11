@@ -3,185 +3,494 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yeka Teknoloji | Yapay Zeka Asistanı</title>
-    <meta name="description" content="İşletmeniz için 7/24 çalışan, çağrıları ve mesajları yanıtlayan yapay zeka asistanı.">
+    <title>Yeka Teknoloji | Geleceğin İletişim Çözümleri</title>
+    <meta name="description" content="Yeka Teknoloji AI asistanları ile işletmenizi 7/24 erişilebilir kılın. Çağrı yanıtlama, rezervasyon ve müşteri hizmetleri için akıllı çözümler.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #0070f3; /* Yeka Mavisi */
-            --secondary-color: #111;
-            --bg-color: #f4f4f5;
-            --text-color: #444;
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #0f172a;
+            --accent: #3b82f6;
+            --light: #f8fafc;
+            --text-main: #334155;
+            --text-light: #94a3b8;
             --white: #ffffff;
+            --gradient-hero: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background-color: var(--light);
+            color: var(--text-main);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        /* Header / Hero Section */
-        header {
-            background-color: var(--white);
-            text-align: center;
-            padding: 4rem 1rem;
-            border-bottom: 1px solid #eaeaea;
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .container {
-            max-width: 900px;
+        .animate {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        /* Header / Navigation */
+        nav {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 1rem 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        h1 {
-            font-size: 2.5rem;
-            color: var(--secondary-color);
-            margin-bottom: 1rem;
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
             letter-spacing: -0.5px;
         }
 
-        p.subtitle {
+        .nav-links a {
+            margin-left: 2rem;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        header.hero {
+            background: var(--gradient-hero);
+            color: var(--white);
+            padding: 8rem 20px 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header.hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 20% 150%, rgba(59, 130, 246, 0.3) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            background: linear-gradient(to right, #fff, #bfdbfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.hero-subtitle {
             font-size: 1.25rem;
-            color: #666;
-            margin-bottom: 2rem;
+            color: #cbd5e1;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .cta-button {
             display: inline-block;
-            background-color: var(--primary-color);
+            background-color: var(--primary);
             color: var(--white);
-            padding: 12px 30px;
+            padding: 16px 40px;
             font-size: 1.1rem;
-            font-weight: 600;
+            font-weight: 700;
             text-decoration: none;
-            border-radius: 6px;
-            transition: background-color 0.2s;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
         }
 
         .cta-button:hover {
-            background-color: #0051a2;
+            background-color: var(--white);
+            color: var(--primary);
+            transform: translateY(-2px);
         }
 
-        /* Features Grid */
-        .features {
-            padding: 4rem 0;
+        /* Features Section */
+        .section-padding {
+            padding: 5rem 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.25rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: var(--text-light);
+            font-size: 1.1rem;
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
-            margin-top: 2rem;
         }
 
         .card {
             background: var(--white);
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e2e8f0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::top {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: var(--primary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+            transform-origin: left;
         }
 
         .card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+
+        .card:hover::top {
+            transform: scaleX(1);
+        }
+
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            background-color: #eff6ff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
         }
 
         .card h3 {
-            color: var(--secondary-color);
-            margin-top: 0;
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: var(--secondary);
         }
 
-        .icon {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            display: block;
+        .card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin: 0;
         }
 
-        /* Why AI Section */
-        .why-ai {
-            background-color: var(--white);
-            padding: 4rem 0;
+        /* Stats / Lively Section */
+        .stats {
+            background-color: var(--secondary);
+            color: var(--white);
+            padding: 4rem 20px;
             text-align: center;
         }
+        
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
 
-        .why-ai h2 {
-            font-size: 2rem;
-            color: var(--secondary-color);
+        .stat-item h3 {
+            font-size: 2.5rem;
+            margin: 0;
+            color: var(--accent);
+        }
+
+        .stat-item p {
+            margin-top: 0.5rem;
+            color: #94a3b8;
+        }
+
+        /* Team Section */
+        .team-section {
+            background-color: #f1f5f9;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .team-member {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        .avatar-placeholder {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #bfdbfe 0%, #3b82f6 100%);
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--white);
+            font-size: 1.5rem;
+        }
+
+        .team-member h4 {
+            margin: 0;
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+
+        .team-member p {
+            margin: 0.5rem 0 0;
+            color: var(--primary);
+            font-size: 0.9rem;
+            font-weight: 600;
         }
 
         /* Footer */
         footer {
-            text-align: center;
-            padding: 2rem;
-            color: #888;
-            font-size: 0.9rem;
-            border-top: 1px solid #eaeaea;
-            background: var(--white);
+            background-color: var(--secondary);
+            color: #cbd5e1;
+            padding: 4rem 20px;
         }
 
-        /* Mobile Responsiveness */
-        @media (max-width: 600px) {
-            h1 { font-size: 2rem; }
-            .grid { grid-template-columns: 1fr; }
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 2rem;
+        }
+
+        .footer-brand h3 {
+            color: var(--white);
+            margin-top: 0;
+        }
+
+        .footer-links a {
+            display: block;
+            color: #cbd5e1;
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #1e293b;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.25rem; }
+            .nav-links { display: none; } /* Simplified mobile menu for now */
+            header.hero { padding: 6rem 20px 4rem; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="container">
-            <h1>Telefonlarınız Susmasın, İşiniz Durmasın.</h1>
-            <p class="subtitle">Yeka Yapay Zeka Asistanı ile çağrıları ve mesajları 7/24 yanıtlayın, rezervasyonları otomatikleştirin ve müşteri memnuniyetini artırın.</p>
-            <a href="mailto:efe.caliskaner@sabanciuniv.edu" class="cta-button">Hemen Teklif Alın</a>
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">Yeka Teknoloji</a>
+            <div class="nav-links">
+                <a href="#ozellikler">Özellikler</a>
+                <a href="#ekip">Ekibimiz</a>
+                <a href="mailto:iletisim@yekateknoloji.com" style="color: var(--primary);">İletişime Geç</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content animate">
+            <h1>Yapay Zeka ile İşletmenizi Dönüştürün</h1>
+            <p class="hero-subtitle">Telefon çağrıları, müşteri mesajları ve rezervasyonlar... Hepsini Yeka AI Asistanlarına bırakın, siz işinizi büyütmeye odaklanın.</p>
+            <a href="#iletisim" class="cta-button">Hemen Başlayın</a>
         </div>
     </header>
 
-    <section class="features container">
-        <h2 style="text-align: center; color: #111;">Neden Yapay Zeka Asistanı?</h2>
+    <section id="ozellikler" class="section-padding container">
+        <div class="section-title">
+            <h2>Neden Yeka Teknoloji?</h2>
+            <p>Modern işletmelerin modern çözümlere ihtiyacı var.</p>
+        </div>
+
         <div class="grid">
             <div class="card">
-                <span class="icon">🕒</span>
-                <h3>7/24 Kesintisiz Hizmet</h3>
-                <p>İnsanlar uyur, hastalanır veya mola verir; ancak yapay zeka asla durmaz. Müşterileriniz gece 03:00'te bile rezervasyon yapabilir veya sorularına anında yanıt alabilir.</p>
+                <div class="icon-box">📞</div>
+                <h3>Akıllı Çağrı Yönetimi</h3>
+                <p>Müşteri çağrılarını doğal dilde yanıtlayan, sorunu anlayan ve çözüm üreten gelişmiş AI asistanlar.</p>
             </div>
-
+            
             <div class="card">
-                <span class="icon">📞</span>
-                <h3>Hiçbir Çağrıyı Kaçırmayın</h3>
-                <p>Meşgul olduğunuzda çalan telefonlar ciro kaybıdır. AI asistan, aynı anda yüzlerce çağrıyı yanıtlayarak potansiyel müşterilerinizi rakibe kaptırmanızı önler.</p>
-            </div>
-
-            <div class="card">
-                <span class="icon">💰</span>
-                <h3>Maliyet Avantajı</h3>
-                <p>Ekstra personel, sigorta ve eğitim masrafları olmadan tam zamanlı bir resepsiyonistten daha fazlasına sahip olun. İşletme giderlerinizi düşürün.</p>
-            </div>
-
-            <div class="card">
-                <span class="icon">📅</span>
+                <div class="icon-box">📅</div>
                 <h3>Otomatik Rezervasyon</h3>
-                <p>Asistanınız takviminizi yönetir, uygun saatleri müşteriye sunar ve kaydı oluşturur. Size sadece işinize odaklanmak kalır.</p>
+                <p>Takviminize tam entegre sistem sayesinde randevuları hatasız ve anlık olarak organize eder.</p>
+            </div>
+
+            <div class="card">
+                <div class="icon-box">💬</div>
+                <h3>7/24 Mesajlaşma</h3>
+                <p>WhatsApp, Instagram ve Web Chat üzerinden gelen soruları günün her saati beklemeden yanıtlar.</p>
+            </div>
+
+            <div class="card">
+                <div class="icon-box">🚀</div>
+                <h3>Maksimum Verimlilik</h3>
+                <p>Operasyonel yükünüzü hafifletin, müşteri memnuniyetini artırın ve maliyetleri düşürün.</p>
             </div>
         </div>
     </section>
 
-    <section class="why-ai">
-        <div class="container">
-            <h2>Geleceğin Teknolojisiyle Bugünden Tanışın</h2>
-            <p style="max-width: 700px; margin: 1rem auto; color: #555;">
-                Müşterileriniz beklemeyi sevmez. Geleneksel telesekreterlerin aksine, Yeka AI müşterilerinizle doğal dilde konuşur, onları anlar ve sorunlarını çözer. 
-                Modern bir işletme için modern bir çözüm.
-            </p>
-            <br>
-            <a href="mailto:efe.caliskaner@sabanciuniv.edu" class="cta-button">Demo Talep Edin</a>
+    <section class="stats">
+        <div class="stat-grid">
+            <div class="stat-item">
+                <h3>%100</h3>
+                <p>Çağrı Yanıtlama</p>
+            </div>
+            <div class="stat-item">
+                <h3>7/24</h3>
+                <p>Kesintisiz Hizmet</p>
+            </div>
+            <div class="stat-item">
+                <h3>0</h3>
+                <p>Bekleme Süresi</p>
+            </div>
         </div>
     </section>
 
-    <footer>
+    <section id="ekip" class="section-padding team-section">
         <div class="container">
-            <p>&copy; 2025 Yeka Teknoloji. Tüm hakları saklıdır.</p>
-            <p><a href="mailto:efe.caliskaner@sabanciuniv.edu" style="color: #0
+            <div class="section-title">
+                <h2>Kurucu Ekibimiz</h2>
+                <p>Geleceği inşa eden vizyoner liderler.</p>
+            </div>
+            
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="avatar-placeholder">MY</div>
+                    <h4>Mahmut Yğıaz Onur</h4>
+                    <p>Kurucu Ortak</p>
+                </div>
+
+                <div class="team-member">
+                    <div class="avatar-placeholder">KB</div>
+                    <h4>Kıvanç Baş</h4>
+                    <p>Kurucu Ortak</p>
+                </div>
+
+                <div class="team-member">
+                    <div class="avatar-placeholder">EÇ</div>
+                    <h4>Efe Çalışkaner</h4>
+                    <p>Kurucu Ortak</p>
+                </div>
+
+                <div class="team-member">
+                    <div class="avatar-placeholder">AÖ</div>
+                    <h4>Alperen Öksüz</h4>
+                    <p>Kurucu Ortak</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="iletisim">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>Yeka Teknoloji</h3>
+                <p>Yapay Zeka Çözüm Ortağınız.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Hızlı Bağlantılar</h4>
+                <a href="#">Ana Sayfa</a>
+                <a href="#ozellikler">Hizmetler</a>
+                <a href="#ekip">Hakkımızda</a>
+            </div>
+            <div class="footer-links">
+                <h4>İletişim</h4>
+                <a href="mailto:info@yekateknoloji.com">info@yekateknoloji.com</a>
+                <a href="#">İstanbul, Türkiye</a>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2025 Yeka Teknoloji. Tüm hakları saklıdır.
+        </div>
+    </footer>
+
+</body>
+</html>
