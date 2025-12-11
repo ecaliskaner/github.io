@@ -3,49 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Efe Çalışkaner</title>
+    <title>Yeka Teknoloji | Yapay Zeka Asistanı</title>
+    <meta name="description" content="İşletmeniz için 7/24 çalışan, çağrıları ve mesajları yanıtlayan yapay zeka asistanı.">
     <style>
+        :root {
+            --primary-color: #0070f3; /* Yeka Mavisi */
+            --secondary-color: #111;
+            --bg-color: #f4f4f5;
+            --text-color: #444;
+            --white: #ffffff;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f4f4f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
-            color: #333;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
         }
-        .container {
+
+        /* Header / Hero Section */
+        header {
+            background-color: var(--white);
             text-align: center;
-            background: white;
+            padding: 4rem 1rem;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            letter-spacing: -0.5px;
+        }
+
+        p.subtitle {
+            font-size: 1.25rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+
+        .cta-button:hover {
+            background-color: #0051a2;
+        }
+
+        /* Features Grid */
+        .features {
+            padding: 4rem 0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: var(--white);
             padding: 2rem;
             border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            max-width: 400px;
-            width: 90%;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
         }
-        h1 { margin-bottom: 0.5rem; color: #111; }
-        p { color: #666; line-height: 1.5; }
-        .button {
-            display: inline-block;
-            margin-top: 1.5rem;
-            padding: 10px 20px;
-            background-color: #0070f3;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: 500;
+
+        .card:hover {
+            transform: translateY(-5px);
         }
-        .button:hover { background-color: #0051a2; }
+
+        .card h3 {
+            color: var(--secondary-color);
+            margin-top: 0;
+        }
+
+        .icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* Why AI Section */
+        .why-ai {
+            background-color: var(--white);
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .why-ai h2 {
+            font-size: 2rem;
+            color: var(--secondary-color);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #888;
+            font-size: 0.9rem;
+            border-top: 1px solid #eaeaea;
+            background: var(--white);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 600px) {
+            h1 { font-size: 2rem; }
+            .grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Merhaba! 👋</h1>
-        <p>Web sitem şu anda yapım aşamasında. Yakında projelerim ve blog yazılarımla burada olacağım.</p>
-        <a href="mailto:efe.caliskaner@sabanciuniv.edu" class="button">Bana Ulaşın</a>
-    </div>
+    <header>
+        <div class="container">
+            <h1>Telefonlarınız Susmasın, İşiniz Durmasın.</h1>
+            <p class="subtitle">Yeka Yapay Zeka Asistanı ile çağrıları ve mesajları 7/24 yanıtlayın, rezervasyonları otomatikleştirin ve müşteri memnuniyetini artırın.</p>
+            <a href="mailto:efe.caliskaner@sabanciuniv.edu" class="cta-button">Hemen Teklif Alın</a>
+        </div>
+    </header>
 
-</body>
-</html>
+    <section class="features container">
+        <h2 style="text-align: center; color: #111;">Neden Yapay Zeka Asistanı?</h2>
+        <div class="grid">
+            <div class="card">
+                <span class="icon">🕒</span>
+                <h3>7/24 Kesintisiz Hizmet</h3>
+                <p>İnsanlar uyur, hastalanır veya mola verir; ancak yapay zeka asla durmaz. Müşterileriniz gece 03:00'te bile rezervasyon yapabilir veya sorularına anında yanıt alabilir.</p>
+            </div>
+
+            <div class="card">
+                <span class="icon">📞</span>
+                <h3>Hiçbir Çağrıyı Kaçırmayın</h3>
+                <p>Meşgul olduğunuzda çalan telefonlar ciro kaybıdır. AI asistan, aynı anda yüzlerce çağrıyı yanıtlayarak potansiyel müşterilerinizi rakibe kaptırmanızı önler.</p>
+            </div>
+
+            <div class="card">
+                <span class="icon">💰</span>
+                <h3>Maliyet Avantajı</h3>
+                <p>Ekstra personel, sigorta ve eğitim masrafları olmadan tam zamanlı bir resepsiyonistten daha fazlasına sahip olun. İşletme giderlerinizi düşürün.</p>
+            </div>
+
+            <div class="card">
+                <span class="icon">📅</span>
+                <h3>Otomatik Rezervasyon</h3>
+                <p>Asistanınız takviminizi yönetir, uygun saatleri müşteriye sunar ve kaydı oluşturur. Size sadece işinize odaklanmak kalır.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="why-ai">
+        <div class="container">
+            <h2>Geleceğin Teknolojisiyle Bugünden Tanışın</h2>
+            <p style="max-width: 700px; margin: 1rem auto; color: #555;">
+                Müşterileriniz beklemeyi sevmez. Geleneksel telesekreterlerin aksine, Yeka AI müşterilerinizle doğal dilde konuşur, onları anlar ve sorunlarını çözer. 
+                Modern bir işletme için modern bir çözüm.
+            </p>
+            <br>
+            <a href="mailto:efe.caliskaner@sabanciuniv.edu" class="cta-button">Demo Talep Edin</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Yeka Teknoloji. Tüm hakları saklıdır.</p>
+            <p><a href="mailto:efe.caliskaner@sabanciuniv.edu" style="color: #0
