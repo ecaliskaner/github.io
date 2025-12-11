@@ -1,2 +1,2 @@
 # github.io-yekatech
-Yeka Tech's website
+Yeka Tech's website.
