@@ -1,496 +1,675 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yeka Teknoloji | Geleceğin İletişim Çözümleri</title>
-    <meta name="description" content="Yeka Teknoloji AI asistanları ile işletmenizi 7/24 erişilebilir kılın. Çağrı yanıtlama, rezervasyon ve müşteri hizmetleri için akıllı çözümler.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>YEKA - Otonom Müşteri Yönetimi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        background: '#09090b',
+                        surface: '#18181b',
+                        primary: '#3b82f6',
+                        secondary: '#8b5cf6',
+                        accent: '#f472b6',
+                        yeka: '#6366f1' // Indigo
+                    },
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'shimmer': 'shimmer 2s linear infinite',
+                        'call-wave': 'call-wave 1.5s infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        shimmer: {
+                            from: { backgroundPosition: '0 0' },
+                            to: { backgroundPosition: '-200% 0' },
+                        },
+                        'call-wave': {
+                            '0%': { transform: 'scale(1)', opacity: '0.6' },
+                            '100%': { transform: 'scale(2.5)', opacity: '0' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        :root {
-            --primary: #2563eb;
-            --primary-dark: #1e40af;
-            --secondary: #0f172a;
-            --accent: #3b82f6;
-            --light: #f8fafc;
-            --text-main: #334155;
-            --text-light: #94a3b8;
-            --white: #ffffff;
-            --gradient-hero: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--light);
-            color: var(--text-main);
-            line-height: 1.6;
+            background-color: #050505;
+            color: #fff;
             overflow-x: hidden;
         }
 
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(to right, #6366f1, #a855f7, #ec4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Aurora Background */
+        .aurora-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.08), transparent 25%), 
+                radial-gradient(circle at 85% 30%, rgba(168, 85, 247, 0.08), transparent 25%);
+        }
+
+        /* Grid Pattern */
+        .grid-pattern {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+        }
+
+        /* Animated Border for Cards */
+        .gradient-border {
+            position: relative;
+            background: #18181b;
+            border-radius: 0.75rem;
+        }
+        .gradient-border::before {
+            content: "";
+            position: absolute;
+            inset: -1px;
+            border-radius: 0.8rem;
+            padding: 1px;
+            background: linear-gradient(45deg, #6366f1, #8b5cf6, #ec4899);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+        .gradient-border:hover::before {
+            opacity: 1;
+        }
+
+        /* Chat Animations */
+        .message-enter {
+            animation: slideIn 0.4s ease-out forwards;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        @keyframes slideIn {
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .animate {
-            animation: fadeIn 0.8s ease-out forwards;
+        /* View Transition Utility */
+        .view-section {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
         }
-
-        /* Header / Navigation */
-        nav {
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--primary);
-            text-decoration: none;
-            letter-spacing: -0.5px;
-        }
-
-        .nav-links a {
-            margin-left: 2rem;
-            text-decoration: none;
-            color: var(--text-main);
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-
-        /* Hero Section */
-        header.hero {
-            background: var(--gradient-hero);
-            color: var(--white);
-            padding: 8rem 20px 6rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        header.hero::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at 20% 150%, rgba(59, 130, 246, 0.3) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-            background: linear-gradient(to right, #fff, #bfdbfe);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        p.hero-subtitle {
-            font-size: 1.25rem;
-            color: #cbd5e1;
-            margin-bottom: 2.5rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background-color: var(--primary);
-            color: var(--white);
-            padding: 16px 40px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            text-decoration: none;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
-        }
-
-        .cta-button:hover {
-            background-color: var(--white);
-            color: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        /* Features Section */
-        .section-padding {
-            padding: 5rem 20px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-title h2 {
-            font-size: 2.25rem;
-            color: var(--secondary);
-            margin-bottom: 1rem;
-        }
-
-        .section-title p {
-            color: var(--text-light);
-            font-size: 1.1rem;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .card {
-            background: var(--white);
-            padding: 2.5rem;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid #e2e8f0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card::top {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 4px;
-            background: var(--primary);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-            transform-origin: left;
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-        }
-
-        .card:hover::top {
-            transform: scaleX(1);
-        }
-
-        .icon-box {
-            width: 60px;
-            height: 60px;
-            background-color: #eff6ff;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.75rem;
-            margin-bottom: 1.5rem;
-            color: var(--primary);
-        }
-
-        .card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 0.75rem;
-            color: var(--secondary);
-        }
-
-        .card p {
-            color: var(--text-light);
-            font-size: 0.95rem;
-            margin: 0;
-        }
-
-        /* Stats / Lively Section */
-        .stats {
-            background-color: var(--secondary);
-            color: var(--white);
-            padding: 4rem 20px;
-            text-align: center;
-        }
-        
-        .stat-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .stat-item h3 {
-            font-size: 2.5rem;
-            margin: 0;
-            color: var(--accent);
-        }
-
-        .stat-item p {
-            margin-top: 0.5rem;
-            color: #94a3b8;
-        }
-
-        /* Team Section */
-        .team-section {
-            background-color: #f1f5f9;
-        }
-
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .team-member {
-            background: var(--white);
-            border-radius: 12px;
-            padding: 2rem;
-            text-align: center;
-            transition: transform 0.2s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-        }
-
-        .team-member:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-        }
-
-        .avatar-placeholder {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #bfdbfe 0%, #3b82f6 100%);
-            border-radius: 50%;
-            margin: 0 auto 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            color: var(--white);
-            font-size: 1.5rem;
-        }
-
-        .team-member h4 {
-            margin: 0;
-            color: var(--secondary);
-            font-size: 1.1rem;
-        }
-
-        .team-member p {
-            margin: 0.5rem 0 0;
-            color: var(--primary);
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--secondary);
-            color: #cbd5e1;
-            padding: 4rem 20px;
-        }
-
-        .footer-content {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            max-width: 1200px;
-            margin: 0 auto;
-            gap: 2rem;
-        }
-
-        .footer-brand h3 {
-            color: var(--white);
-            margin-top: 0;
-        }
-
-        .footer-links a {
+        .view-section.active {
             display: block;
-            color: #cbd5e1;
-            text-decoration: none;
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-links a:hover {
-            color: var(--white);
-        }
-
-        .copyright {
-            text-align: center;
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid #1e293b;
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 2.25rem; }
-            .nav-links { display: none; } /* Simplified mobile menu for now */
-            header.hero { padding: 6rem 20px 4rem; }
+            opacity: 1;
         }
     </style>
 </head>
-<body>
+<body class="antialiased">
 
-    <nav>
-        <div class="nav-container">
-            <a href="#" class="logo">Yeka Teknoloji</a>
-            <div class="nav-links">
-                <a href="#ozellikler">Özellikler</a>
-                <a href="#ekip">Ekibimiz</a>
-                <a href="mailto:iletisim@yekateknoloji.com" style="color: var(--primary);">İletişime Geç</a>
+    <!-- Arkaplan -->
+    <div class="aurora-bg"></div>
+    <div class="fixed inset-0 grid-pattern pointer-events-none z-[-1]"></div>
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 glass border-b-0 border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="navigateTo('landing')">
+                <div class="w-8 h-8 rounded bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+                    <span class="font-bold text-white text-sm">Y</span>
+                </div>
+                <span class="font-bold text-xl tracking-tight">YEKA</span>
+            </div>
+            
+            <!-- Landing Nav Links (Only visible on landing) -->
+            <div id="landing-nav" class="hidden md:flex gap-8 text-sm font-medium text-gray-400">
+                <a href="#solutions" class="hover:text-white transition">Çözümler</a>
+                <a href="#telephone-ai" class="hover:text-white transition">Sesli AI</a>
+                <a href="#pricing" class="hover:text-white transition">Fiyatlandırma</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button onclick="navigateTo('login')" class="hidden md:block text-sm text-gray-400 hover:text-white transition">Giriş Yap</button>
+                <button onclick="navigateTo('dashboard')" class="bg-white text-black px-5 py-2 rounded-lg text-sm font-bold hover:bg-gray-200 transition shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+                    Başla
+                </button>
             </div>
         </div>
     </nav>
 
-    <header class="hero">
-        <div class="hero-content animate">
-            <h1>Yapay Zeka ile İşletmenizi Dönüştürün</h1>
-            <p class="hero-subtitle">Telefon çağrıları, müşteri mesajları ve rezervasyonlar... Hepsini Yeka AI Asistanlarına bırakın, siz işinizi büyütmeye odaklanın.</p>
-            <a href="#iletisim" class="cta-button">Hemen Başlayın</a>
-        </div>
-    </header>
+    <!-- VIEW 1: LANDING PAGE -->
+    <div id="view-landing" class="view-section active">
+        <!-- Hero Section -->
+        <main class="pt-24 pb-20 px-6 relative overflow-hidden">
+            <!-- Abstract Shapes -->
+            <div class="absolute top-20 left-1/4 w-72 h-72 bg-indigo-500/20 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob"></div>
+            <div class="absolute top-20 right-1/4 w-72 h-72 bg-purple-500/20 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
 
-    <section id="ozellikler" class="section-padding container">
-        <div class="section-title">
-            <h2>Neden Yeka Teknoloji?</h2>
-            <p>Modern işletmelerin modern çözümlere ihtiyacı var.</p>
-        </div>
+            <div class="max-w-5xl mx-auto text-center relative z-10">
+                
+                <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-[1.1]">
+                    <span class="text-gradient">Otonom</span> İşletme Asistanı
+                </h1>
+                <p class="text-gray-400 text-lg md:text-xl mb-10 max-w-2xl mx-auto leading-relaxed">
+                    Telefon aramalarını karşılayan, WhatsApp'tan satış yapan ve randevu takvimini yöneten 
+                    <span class="text-white font-semibold">YEKA AI</span> ile tanışın.
+                </p>
 
-        <div class="grid">
-            <div class="card">
-                <div class="icon-box">📞</div>
-                <h3>Akıllı Çağrı Yönetimi</h3>
-                <p>Müşteri çağrılarını doğal dilde yanıtlayan, sorunu anlayan ve çözüm üreten gelişmiş AI asistanlar.</p>
+                <!-- Agent Input Bar -->
+                <div class="max-w-2xl mx-auto mb-16 relative group">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+                    <div class="relative bg-[#09090b] ring-1 ring-white/10 rounded-xl p-2 flex items-center shadow-2xl">
+                        <div class="pl-4 pr-2 text-gray-500">
+                            <i class="fa-solid fa-sparkles text-indigo-500"></i>
+                        </div>
+                        <input type="text" placeholder="İşletmenizin adı nedir? (Örn: YEKA Kuaför)" class="w-full bg-transparent border-none outline-none text-white placeholder-gray-600 h-12">
+                        <button onclick="navigateTo('dashboard')" class="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white px-6 py-2.5 rounded-lg font-medium transition-all shadow-lg shadow-indigo-900/20 flex items-center gap-2 whitespace-nowrap">
+                            <span>Agent Oluştur</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+                    <div class="mt-3 flex justify-center gap-6 text-xs text-gray-500 font-medium">
+                        <span class="flex items-center gap-1"><i class="fa-brands fa-whatsapp text-green-500"></i> WhatsApp</span>
+                        <span class="flex items-center gap-1"><i class="fa-brands fa-instagram text-pink-500"></i> Instagram</span>
+                        <span class="flex items-center gap-1"><i class="fa-solid fa-phone text-blue-500"></i> Telefon Entegrasyonu</span>
+                    </div>
+                </div>
+
+                <!-- Dashboard / Terminal Mockup -->
+                <div class="relative max-w-4xl mx-auto perspective-1000">
+                    <div class="glass rounded-xl border border-white/10 overflow-hidden shadow-2xl transform transition hover:scale-[1.01] duration-500">
+                        <div class="h-10 bg-black/40 border-b border-white/5 flex items-center px-4 justify-between">
+                            <div class="flex gap-2">
+                                <div class="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50"></div>
+                            </div>
+                            <div class="text-xs text-gray-500 font-mono">yeka_dashboard.exe</div>
+                            <div class="w-10"></div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-12 h-[450px]">
+                            <!-- Sidebar -->
+                            <div class="hidden md:block md:col-span-3 bg-black/20 border-r border-white/5 p-4">
+                                <div class="text-xs font-bold text-gray-500 mb-4 uppercase tracking-wider">Aktif Kanallar</div>
+                                <div class="space-y-2">
+                                    <div class="flex items-center gap-3 p-2 bg-white/5 rounded border border-white/5 text-sm text-white cursor-pointer">
+                                        <i class="fa-brands fa-whatsapp text-green-400"></i>
+                                        <div class="flex-1 overflow-hidden">
+                                            <div class="truncate">Müşteri Hattı</div>
+                                            <div class="text-[10px] text-green-400">Çevrimiçi</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-3 p-2 hover:bg-white/5 rounded border border-transparent hover:border-white/5 text-sm text-gray-400 cursor-pointer transition">
+                                        <i class="fa-brands fa-instagram text-pink-400"></i>
+                                        <div>DM Kutusu</div>
+                                    </div>
+                                    <div class="flex items-center gap-3 p-2 hover:bg-white/5 rounded border border-transparent hover:border-white/5 text-sm text-gray-400 cursor-pointer transition">
+                                        <i class="fa-solid fa-phone text-blue-400"></i>
+                                        <div>YEKA Voice</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-8 p-3 rounded bg-indigo-500/10 border border-indigo-500/20">
+                                    <div class="text-xs text-indigo-300 font-bold mb-1">Bugünkü Randevular</div>
+                                    <div class="text-2xl font-bold text-white">14</div>
+                                    <div class="text-[10px] text-gray-400">+3 Telefonla Alındı</div>
+                                </div>
+                            </div>
+
+                            <!-- Chat Area -->
+                            <div class="col-span-12 md:col-span-9 bg-[#0c0c0e] flex flex-col relative">
+                                <div class="h-14 border-b border-white/5 flex items-center justify-between px-6 bg-white/[0.01]">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 flex items-center justify-center text-xs font-bold">
+                                            WP
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-semibold text-white">Gelen Mesaj (+90 532...)</div>
+                                            <div class="text-xs text-gray-500">Otomatik Yanıt Modu</div>
+                                        </div>
+                                    </div>
+                                    <button class="text-xs bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded transition text-white">
+                                        Devral
+                                    </button>
+                                </div>
+                                <div class="flex-1 p-6 space-y-5 overflow-y-auto" id="chat-container"></div>
+                                <div class="p-4 border-t border-white/5">
+                                    <div class="relative">
+                                        <input disabled type="text" value="YEKA Yanıtlıyor..." class="w-full bg-[#18181b] border border-white/10 rounded-lg pl-4 pr-10 py-3 text-sm text-gray-400 focus:outline-none cursor-not-allowed">
+                                        <div class="absolute right-3 top-3">
+                                            <div class="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Solutions Section -->
+        <section id="solutions" class="py-24 relative">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="mb-16 md:text-center max-w-3xl mx-auto">
+                    <h2 class="text-3xl md:text-5xl font-bold mb-4">İşletim Sisteminizi <span class="text-white">YEKA ile Yükseltin</span></h2>
+                    <p class="text-gray-400">Tek bir platform üzerinden tüm iletişim kanallarınızı yapay zekaya bağlayın.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="md:col-span-2 gradient-border p-8 group overflow-hidden relative min-h-[300px] flex flex-col justify-between">
+                        <div class="absolute top-0 right-0 w-64 h-64 bg-green-500/10 rounded-full blur-3xl -mr-16 -mt-16 transition group-hover:bg-green-500/20"></div>
+                        <div class="relative z-10">
+                            <div class="w-12 h-12 rounded-lg bg-green-500/20 flex items-center justify-center mb-6">
+                                <i class="fa-brands fa-whatsapp text-2xl text-green-400"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-2 text-white">WhatsApp & Instagram Otomasyonu</h3>
+                            <p class="text-gray-400 max-w-md">Bot değil, gerçek bir asistan. Fiyat listesi sunar, ürün fotoğrafları gönderir.</p>
+                        </div>
+                    </div>
+
+                    <div class="gradient-border p-8 group relative overflow-hidden flex flex-col justify-between">
+                        <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-indigo-900/10 to-transparent opacity-0 group-hover:opacity-100 transition"></div>
+                        <div class="relative z-10">
+                            <div class="w-12 h-12 rounded-lg bg-indigo-500/20 flex items-center justify-center mb-6">
+                                <i class="fa-solid fa-calendar-check text-2xl text-indigo-400"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-2 text-white">Akıllı Takvim</h3>
+                            <p class="text-gray-400 text-sm">Google Calendar entegrasyonu ile çifte rezervasyonu %100 önler.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TELEPHONE AI CONNECTION SECTION -->
+        <section id="telephone-ai" class="py-24 border-y border-white/5 bg-white/[0.02] relative overflow-hidden">
+            <div class="absolute inset-0 grid-pattern opacity-50"></div>
+            
+            <div class="max-w-7xl mx-auto px-6 relative z-10">
+                <div class="flex flex-col md:flex-row items-center gap-16">
+                    <div class="flex-1">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-300 text-xs font-bold mb-6 uppercase tracking-wide">
+                            <span class="relative flex h-2 w-2">
+                              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                              <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                            </span>
+                            Canlı Telefon Entegrasyonu
+                        </div>
+                        <h2 class="text-4xl md:text-5xl font-bold mb-6">Telefonlarınız Çaldığında <br> <span class="text-blue-400">YEKA</span> Cevaplasın.</h2>
+                        <p class="text-gray-400 text-lg mb-8 leading-relaxed">
+                            Müşterileriniz sizi aradığında, meşgul olsanız bile YEKA devreye girer. Doğal insan sesiyle konuşur, sorunu anlar ve randevuyu takviminize işler.
+                        </p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4 p-4 rounded-lg bg-white/5 border border-white/5">
+                                <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
+                                    <i class="fa-solid fa-phone-volume text-blue-400"></i>
+                                </div>
+                                <div>
+                                    <div class="font-bold text-white">Sesli Arama Yönlendirme</div>
+                                    <div class="text-xs text-gray-500">Santral entegrasyonu ile anında bağlantı.</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 p-4 rounded-lg bg-white/5 border border-white/5">
+                                <div class="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center">
+                                    <i class="fa-solid fa-file-audio text-purple-400"></i>
+                                </div>
+                                <div>
+                                    <div class="font-bold text-white">Konuşma Dökümü & CRM</div>
+                                    <div class="text-xs text-gray-500">Görüşme metne çevrilir ve müşteri kartına işlenir.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visual Call Simulation -->
+                    <div class="flex-1 w-full flex justify-center">
+                        <div class="relative w-80 h-80">
+                            <!-- Central AI Core -->
+                            <div class="absolute inset-0 m-auto w-32 h-32 rounded-full bg-blue-600 flex items-center justify-center z-20 shadow-[0_0_50px_rgba(37,99,235,0.5)]">
+                                <i class="fa-solid fa-microphone-lines text-4xl text-white"></i>
+                            </div>
+                            
+                            <!-- Animated Waves -->
+                            <div class="absolute inset-0 m-auto w-32 h-32 rounded-full border border-blue-500/30 animate-call-wave z-10"></div>
+                            <div class="absolute inset-0 m-auto w-32 h-32 rounded-full border border-blue-500/30 animate-call-wave" style="animation-delay: 0.5s"></div>
+                            
+                            <!-- Connection Lines -->
+                            <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-12 bg-[#18181b] border border-white/10 px-4 py-2 rounded-full text-xs text-gray-400 flex items-center gap-2">
+                                <i class="fa-solid fa-phone text-green-500"></i>
+                                Gelen Arama (+90 532...)
+                            </div>
+
+                            <div class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-12 bg-[#18181b] border border-white/10 px-4 py-2 rounded-full text-xs text-gray-400 flex items-center gap-2">
+                                <i class="fa-solid fa-calendar-check text-purple-500"></i>
+                                Randevu Oluşturuldu
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section id="pricing" class="py-24">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-bold mb-4">Esnek Fiyatlandırma</h2>
+                    <p class="text-gray-400">İster küçük esnaf, ister kurumsal firma.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Starter -->
+                    <div class="p-8 rounded-2xl border border-white/10 bg-white/[0.02] hover:border-white/20 transition">
+                        <div class="text-lg font-medium text-gray-400 mb-2">Başlangıç</div>
+                        <div class="text-4xl font-bold text-white mb-6">₺999<span class="text-sm font-normal text-gray-500">/ay</span></div>
+                        <ul class="space-y-3 mb-8 text-sm text-gray-300">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> WhatsApp Botu</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> Instagram DM</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> Ayda 500 Mesaj</li>
+                        </ul>
+                        <button onclick="navigateTo('dashboard')" class="w-full py-3 rounded-lg border border-white/20 hover:bg-white/5 transition font-medium">Seç</button>
+                    </div>
+                    <!-- Pro -->
+                    <div class="p-8 rounded-2xl border border-indigo-500/50 bg-indigo-500/5 relative">
+                        <div class="absolute top-0 right-0 bg-indigo-500 text-white text-xs px-3 py-1 rounded-bl-lg rounded-tr-lg font-bold">POPÜLER</div>
+                        <div class="text-lg font-medium text-indigo-300 mb-2">Pro İşletme</div>
+                        <div class="text-4xl font-bold text-white mb-6">₺2.499<span class="text-sm font-normal text-gray-500">/ay</span></div>
+                        <ul class="space-y-3 mb-8 text-sm text-gray-300">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> <strong>Sesli Telefon Asistanı</strong></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> WhatsApp & Instagram</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> Google Takvim Entegrasyonu</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> Sınırsız Mesaj</li>
+                        </ul>
+                        <button onclick="navigateTo('dashboard')" class="w-full py-3 rounded-lg bg-indigo-600 hover:bg-indigo-500 transition text-white font-medium">Hemen Başla</button>
+                    </div>
+                     <!-- Enterprise -->
+                     <div class="p-8 rounded-2xl border border-white/10 bg-white/[0.02] hover:border-white/20 transition">
+                        <div class="text-lg font-medium text-gray-400 mb-2">Kurumsal</div>
+                        <div class="text-4xl font-bold text-white mb-6">Özel<span class="text-sm font-normal text-gray-500">/teklif</span></div>
+                        <ul class="space-y-3 mb-8 text-sm text-gray-300">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> Özel Entegrasyonlar</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> Dedicated Server</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> 7/24 Destek</li>
+                        </ul>
+                        <button onclick="navigateTo('dashboard')" class="w-full py-3 rounded-lg border border-white/20 hover:bg-white/5 transition font-medium">İletişime Geç</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="border-t border-white/5 py-12 bg-[#050505]">
+            <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <span class="font-bold text-xl tracking-tight text-white">YEKA</span>
+                    <p class="text-gray-600 text-sm mt-1">Yapay Zeka Entegrasyon ve Kurgu Ağı</p>
+                </div>
+                <div class="flex gap-6 text-sm text-gray-500">
+                    <a href="#" class="hover:text-white transition">Gizlilik</a>
+                    <a href="#" class="hover:text-white transition">İletişim</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- VIEW 2: DASHBOARD (Simulated App) -->
+    <div id="view-dashboard" class="view-section">
+        <div class="flex h-screen bg-[#09090b]">
+            <!-- Sidebar -->
+            <div class="w-64 border-r border-white/10 bg-[#0c0c0e] hidden md:flex flex-col p-4">
+                <div class="flex items-center gap-2 mb-8 px-2">
+                    <div class="w-6 h-6 rounded bg-indigo-600 flex items-center justify-center font-bold text-xs">Y</div>
+                    <span class="font-bold tracking-tight">YEKA Panel</span>
+                </div>
+                <div class="space-y-1">
+                    <div class="p-2 rounded bg-indigo-500/10 text-indigo-400 text-sm font-medium flex items-center gap-3">
+                        <i class="fa-solid fa-chart-line"></i> Genel Bakış
+                    </div>
+                    <div class="p-2 rounded hover:bg-white/5 text-gray-400 text-sm font-medium flex items-center gap-3 cursor-pointer">
+                        <i class="fa-brands fa-whatsapp"></i> Mesajlar
+                    </div>
+                    <div class="p-2 rounded hover:bg-white/5 text-gray-400 text-sm font-medium flex items-center gap-3 cursor-pointer">
+                        <i class="fa-solid fa-phone"></i> Ses Kayıtları
+                    </div>
+                    <div class="p-2 rounded hover:bg-white/5 text-gray-400 text-sm font-medium flex items-center gap-3 cursor-pointer">
+                        <i class="fa-solid fa-calendar"></i> Takvim
+                    </div>
+                </div>
+                <div class="mt-auto pt-4 border-t border-white/10">
+                    <button onclick="navigateTo('landing')" class="flex items-center gap-2 text-sm text-gray-500 hover:text-white transition">
+                        <i class="fa-solid fa-sign-out-alt"></i> Çıkış Yap
+                    </button>
+                </div>
             </div>
             
-            <div class="card">
-                <div class="icon-box">📅</div>
-                <h3>Otomatik Rezervasyon</h3>
-                <p>Takviminize tam entegre sistem sayesinde randevuları hatasız ve anlık olarak organize eder.</p>
-            </div>
+            <!-- Content -->
+            <div class="flex-1 overflow-auto p-8">
+                <header class="flex justify-between items-center mb-8">
+                    <div>
+                        <h2 class="text-2xl font-bold">Hoşgeldiniz 👋</h2>
+                        <p class="text-gray-400 text-sm">İşletmenizin durumu harika görünüyor.</p>
+                    </div>
+                    <div class="flex gap-3">
+                         <div class="h-10 w-10 rounded-full bg-gray-700 flex items-center justify-center text-sm font-bold">YK</div>
+                    </div>
+                </header>
 
-            <div class="card">
-                <div class="icon-box">💬</div>
-                <h3>7/24 Mesajlaşma</h3>
-                <p>WhatsApp, Instagram ve Web Chat üzerinden gelen soruları günün her saati beklemeden yanıtlar.</p>
-            </div>
+                <!-- Dashboard Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="p-6 rounded-xl bg-[#18181b] border border-white/5">
+                        <div class="text-gray-400 text-sm mb-2">Bugünkü Randevular</div>
+                        <div class="text-3xl font-bold text-white">18</div>
+                    </div>
+                    <div class="p-6 rounded-xl bg-[#18181b] border border-white/5">
+                        <div class="text-gray-400 text-sm mb-2">Yanıtlanan Aramalar</div>
+                        <div class="text-3xl font-bold text-blue-400">42</div>
+                    </div>
+                    <div class="p-6 rounded-xl bg-[#18181b] border border-white/5">
+                        <div class="text-gray-400 text-sm mb-2">Otomatik Mesajlar</div>
+                        <div class="text-3xl font-bold text-green-400">156</div>
+                    </div>
+                </div>
 
-            <div class="card">
-                <div class="icon-box">🚀</div>
-                <h3>Maksimum Verimlilik</h3>
-                <p>Operasyonel yükünüzü hafifletin, müşteri memnuniyetini artırın ve maliyetleri düşürün.</p>
+                <!-- Recent Activity List -->
+                <h3 class="font-bold text-lg mb-4">Son Aktiviteler</h3>
+                <div class="bg-[#18181b] rounded-xl border border-white/5 overflow-hidden">
+                    <div class="p-4 border-b border-white/5 flex items-center justify-between hover:bg-white/[0.02]">
+                        <div class="flex items-center gap-4">
+                            <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 text-xs">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div>
+                                <div class="text-sm font-medium text-white">Gelen Arama (+90 532 444...)</div>
+                                <div class="text-xs text-gray-500">YEKA randevu oluşturdu - 14:00</div>
+                            </div>
+                        </div>
+                        <span class="text-xs text-gray-500">2 dk önce</span>
+                    </div>
+                    <div class="p-4 border-b border-white/5 flex items-center justify-between hover:bg-white/[0.02]">
+                        <div class="flex items-center gap-4">
+                            <div class="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 text-xs">
+                                <i class="fa-brands fa-whatsapp"></i>
+                            </div>
+                            <div>
+                                <div class="text-sm font-medium text-white">Ayşe Y. (WhatsApp)</div>
+                                <div class="text-xs text-gray-500">Fiyat listesi gönderildi.</div>
+                            </div>
+                        </div>
+                        <span class="text-xs text-gray-500">15 dk önce</span>
+                    </div>
+                    <div class="p-4 flex items-center justify-between hover:bg-white/[0.02]">
+                        <div class="flex items-center gap-4">
+                            <div class="w-8 h-8 rounded-full bg-pink-500/20 flex items-center justify-center text-pink-400 text-xs">
+                                <i class="fa-brands fa-instagram"></i>
+                            </div>
+                            <div>
+                                <div class="text-sm font-medium text-white">dm_kullanici2 (Instagram)</div>
+                                <div class="text-xs text-gray-500">Konum bilgisi paylaşıldı.</div>
+                            </div>
+                        </div>
+                        <span class="text-xs text-gray-500">1 saat önce</span>
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section class="stats">
-        <div class="stat-grid">
-            <div class="stat-item">
-                <h3>%100</h3>
-                <p>Çağrı Yanıtlama</p>
-            </div>
-            <div class="stat-item">
-                <h3>7/24</h3>
-                <p>Kesintisiz Hizmet</p>
-            </div>
-            <div class="stat-item">
-                <h3>0</h3>
-                <p>Bekleme Süresi</p>
+    <!-- VIEW 3: LOGIN (Simulated) -->
+    <div id="view-login" class="view-section">
+        <div class="min-h-screen flex items-center justify-center px-6">
+            <div class="w-full max-w-md bg-[#18181b] border border-white/10 p-8 rounded-2xl shadow-2xl relative">
+                <button onclick="navigateTo('landing')" class="absolute top-4 right-4 text-gray-500 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+                <div class="text-center mb-8">
+                    <div class="w-12 h-12 bg-indigo-600 rounded-lg mx-auto flex items-center justify-center mb-4">
+                        <span class="font-bold text-xl">Y</span>
+                    </div>
+                    <h2 class="text-2xl font-bold">Tekrar Hoşgeldiniz</h2>
+                    <p class="text-sm text-gray-400 mt-2">YEKA hesabınıza giriş yapın</p>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-1 uppercase font-bold">E-Posta</label>
+                        <input type="email" class="w-full bg-black/20 border border-white/10 rounded p-3 text-white focus:border-indigo-500 outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-1 uppercase font-bold">Şifre</label>
+                        <input type="password" class="w-full bg-black/20 border border-white/10 rounded p-3 text-white focus:border-indigo-500 outline-none transition">
+                    </div>
+                    <button onclick="navigateTo('dashboard')" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-3 rounded font-bold transition">Giriş Yap</button>
+                    <p class="text-xs text-center text-gray-500 mt-4">Henüz üye değil misiniz? <span class="text-indigo-400 cursor-pointer" onclick="navigateTo('landing')">Hesap Oluştur</span></p>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section id="ekip" class="section-padding team-section">
-        <div class="container">
-            <div class="section-title">
-                <h2>Kurucu Ekibimiz</h2>
-                <p>Geleceği inşa eden vizyoner liderler.</p>
-            </div>
+    <!-- Scripts -->
+    <script>
+        // Simple Router Logic
+        function navigateTo(viewId) {
+            // Hide all views
+            document.querySelectorAll('.view-section').forEach(el => {
+                el.classList.remove('active');
+                setTimeout(() => {
+                    if(!el.classList.contains('active')) el.style.display = 'none';
+                }, 300); // Animation delay
+            });
+
+            // Show target view
+            const target = document.getElementById('view-' + viewId);
+            if (target) {
+                target.style.display = 'block';
+                // Small timeout to allow display:block to apply before opacity transition
+                setTimeout(() => {
+                    target.classList.add('active');
+                }, 10);
+                
+                // Scroll to top
+                window.scrollTo(0, 0);
+            }
+        }
+
+        // Chat Simulation Logic (For Landing Page)
+        const chatContainer = document.getElementById('chat-container');
+        const messages = [
+            { sender: 'user', text: 'Merhaba, fiyatlarınız hakkında bilgi alabilir miyim?', delay: 500 },
+            { sender: 'ai', text: 'Selamlar! Ben YEKA asistanı. 👋 Saç kesimi, boya ve bakım hizmetlerimiz var. Hangisiyle ilgileniyorsunuz?', delay: 2000 },
+            { sender: 'user', text: 'Saç kesimi ve fön ne kadar?', delay: 3500 },
+            { sender: 'ai', text: 'Saç kesimi 400 TL, fön ise 150 TL. Paket olarak düşünürseniz 500 TL yardımcı olabilirim. Randevu oluşturmamı ister misiniz?', delay: 5500 },
+            { sender: 'user', text: 'Evet, yarın akşam 6 gibi uygun mu?', delay: 7000 },
+            { sender: 'ai', text: 'Kontrol ediyorum... 🗓️', delay: 8500 },
+            { sender: 'ai', text: 'Yarın 18:00 dolu ancak 18:30 için yerimiz var. Sizin için rezerve edeyim mi?', delay: 10000 },
+             { sender: 'user', text: 'Tamamdır 18:30 olsun.', delay: 11500 },
+             { sender: 'ai', text: 'Harika! 18:30 için randevunuzu oluşturdum. Görüşmek üzere! 🎉', delay: 13000 }
+        ];
+
+        function createMessageElement(msg) {
+            const div = document.createElement('div');
+            div.className = `flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} message-enter`;
             
-            <div class="team-grid">
-                <div class="team-member">
-                    <div class="avatar-placeholder">MY</div>
-                    <h4>Mahmut Yğıaz Onur</h4>
-                    <p>Kurucu Ortak</p>
-                </div>
+            let content = '';
+            if (msg.sender === 'user') {
+                content = `
+                    <div class="bg-blue-600/20 border border-blue-500/30 text-blue-100 px-4 py-2 rounded-2xl rounded-tr-none max-w-[85%] text-sm">
+                        ${msg.text}
+                    </div>
+                `;
+            } else {
+                content = `
+                    <div class="flex items-start gap-3 max-w-[85%]">
+                        <div class="w-6 h-6 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex-shrink-0 flex items-center justify-center text-[10px] mt-1">
+                            <i class="fa-solid fa-robot text-white"></i>
+                        </div>
+                        <div class="bg-gray-800/50 border border-white/10 text-gray-200 px-4 py-2 rounded-2xl rounded-tl-none text-sm shadow-sm">
+                            ${msg.text}
+                        </div>
+                    </div>
+                `;
+            }
+            div.innerHTML = content;
+            return div;
+        }
 
-                <div class="team-member">
-                    <div class="avatar-placeholder">KB</div>
-                    <h4>Kıvanç Baş</h4>
-                    <p>Kurucu Ortak</p>
-                </div>
+        let isAnimating = false;
 
-                <div class="team-member">
-                    <div class="avatar-placeholder">EÇ</div>
-                    <h4>Efe Çalışkaner</h4>
-                    <p>Kurucu Ortak</p>
-                </div>
+        function runChatSimulation() {
+            if (isAnimating) return;
+            isAnimating = true;
+            chatContainer.innerHTML = ''; // Clear
 
-                <div class="team-member">
-                    <div class="avatar-placeholder">AÖ</div>
-                    <h4>Alperen Öksüz</h4>
-                    <p>Kurucu Ortak</p>
-                </div>
-            </div>
-        </div>
-    </section>
+            messages.forEach(msg => {
+                setTimeout(() => {
+                    const el = createMessageElement(msg);
+                    chatContainer.appendChild(el);
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }, msg.delay);
+            });
+            
+            // Loop logic
+            setTimeout(() => {
+                isAnimating = false;
+                runChatSimulation();
+            }, 16000);
+        }
 
-    <footer id="iletisim">
-        <div class="footer-content">
-            <div class="footer-brand">
-                <h3>Yeka Teknoloji</h3>
-                <p>Yapay Zeka Çözüm Ortağınız.</p>
-            </div>
-            <div class="footer-links">
-                <h4>Hızlı Bağlantılar</h4>
-                <a href="#">Ana Sayfa</a>
-                <a href="#ozellikler">Hizmetler</a>
-                <a href="#ekip">Hakkımızda</a>
-            </div>
-            <div class="footer-links">
-                <h4>İletişim</h4>
-                <a href="mailto:info@yekateknoloji.com">info@yekateknoloji.com</a>
-                <a href="#">İstanbul, Türkiye</a>
-            </div>
-        </div>
-        <div class="copyright">
-            &copy; 2025 Yeka Teknoloji. Tüm hakları saklıdır.
-        </div>
-    </footer>
-
+        document.addEventListener('DOMContentLoaded', () => {
+            runChatSimulation();
+        });
+    </script>
 </body>
 </html>
