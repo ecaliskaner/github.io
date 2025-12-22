@@ -137,6 +137,19 @@
             display: block;
             opacity: 1;
         }
+        
+        /* Dashboard Tabs */
+        .dashboard-tab {
+            display: none;
+        }
+        .dashboard-tab.active {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -458,16 +471,16 @@
                     <span class="font-bold tracking-tight">YEKA Panel</span>
                 </div>
                 <div class="space-y-1">
-                    <div class="p-2 rounded bg-indigo-500/10 text-indigo-400 text-sm font-medium flex items-center gap-3">
+                    <div onclick="switchTab('overview')" class="p-2 rounded bg-indigo-500/10 text-indigo-400 text-sm font-medium flex items-center gap-3 cursor-pointer sidebar-item" id="nav-overview">
                         <i class="fa-solid fa-chart-line"></i> Genel Bakış
                     </div>
-                    <div class="p-2 rounded hover:bg-white/5 text-gray-400 text-sm font-medium flex items-center gap-3 cursor-pointer">
+                    <div onclick="switchTab('messages')" class="p-2 rounded hover:bg-white/5 text-gray-400 text-sm font-medium flex items-center gap-3 cursor-pointer sidebar-item" id="nav-messages">
                         <i class="fa-brands fa-whatsapp"></i> Mesajlar
                     </div>
-                    <div class="p-2 rounded hover:bg-white/5 text-gray-400 text-sm font-medium flex items-center gap-3 cursor-pointer">
+                    <div onclick="switchTab('voice')" class="p-2 rounded hover:bg-white/5 text-gray-400 text-sm font-medium flex items-center gap-3 cursor-pointer sidebar-item" id="nav-voice">
                         <i class="fa-solid fa-phone"></i> Ses Kayıtları
                     </div>
-                    <div class="p-2 rounded hover:bg-white/5 text-gray-400 text-sm font-medium flex items-center gap-3 cursor-pointer">
+                    <div onclick="switchTab('calendar')" class="p-2 rounded hover:bg-white/5 text-gray-400 text-sm font-medium flex items-center gap-3 cursor-pointer sidebar-item" id="nav-calendar">
                         <i class="fa-solid fa-calendar"></i> Takvim
                     </div>
                 </div>
@@ -490,62 +503,233 @@
                     </div>
                 </header>
 
-                <!-- Dashboard Stats -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div class="p-6 rounded-xl bg-[#18181b] border border-white/5">
-                        <div class="text-gray-400 text-sm mb-2">Bugünkü Randevular</div>
-                        <div class="text-3xl font-bold text-white">18</div>
+                <!-- TAB 1: OVERVIEW -->
+                <div id="tab-overview" class="dashboard-tab active">
+                    <!-- Dashboard Stats -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="p-6 rounded-xl bg-[#18181b] border border-white/5">
+                            <div class="text-gray-400 text-sm mb-2">Bugünkü Randevular</div>
+                            <div class="text-3xl font-bold text-white">18</div>
+                        </div>
+                        <div class="p-6 rounded-xl bg-[#18181b] border border-white/5">
+                            <div class="text-gray-400 text-sm mb-2">Yanıtlanan Aramalar</div>
+                            <div class="text-3xl font-bold text-blue-400">42</div>
+                        </div>
+                        <div class="p-6 rounded-xl bg-[#18181b] border border-white/5">
+                            <div class="text-gray-400 text-sm mb-2">Otomatik Mesajlar</div>
+                            <div class="text-3xl font-bold text-green-400">156</div>
+                        </div>
                     </div>
-                    <div class="p-6 rounded-xl bg-[#18181b] border border-white/5">
-                        <div class="text-gray-400 text-sm mb-2">Yanıtlanan Aramalar</div>
-                        <div class="text-3xl font-bold text-blue-400">42</div>
-                    </div>
-                    <div class="p-6 rounded-xl bg-[#18181b] border border-white/5">
-                        <div class="text-gray-400 text-sm mb-2">Otomatik Mesajlar</div>
-                        <div class="text-3xl font-bold text-green-400">156</div>
+
+                    <!-- Recent Activity List -->
+                    <h3 class="font-bold text-lg mb-4">Son Aktiviteler</h3>
+                    <div class="bg-[#18181b] rounded-xl border border-white/5 overflow-hidden">
+                        <div class="p-4 border-b border-white/5 flex items-center justify-between hover:bg-white/[0.02]">
+                            <div class="flex items-center gap-4">
+                                <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 text-xs">
+                                    <i class="fa-solid fa-phone"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-medium text-white">Gelen Arama (+90 532 444...)</div>
+                                    <div class="text-xs text-gray-500">YEKA randevu oluşturdu - 14:00</div>
+                                </div>
+                            </div>
+                            <span class="text-xs text-gray-500">2 dk önce</span>
+                        </div>
+                        <div class="p-4 border-b border-white/5 flex items-center justify-between hover:bg-white/[0.02]">
+                            <div class="flex items-center gap-4">
+                                <div class="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 text-xs">
+                                    <i class="fa-brands fa-whatsapp"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-medium text-white">Ayşe Y. (WhatsApp)</div>
+                                    <div class="text-xs text-gray-500">Fiyat listesi gönderildi.</div>
+                                </div>
+                            </div>
+                            <span class="text-xs text-gray-500">15 dk önce</span>
+                        </div>
+                        <div class="p-4 flex items-center justify-between hover:bg-white/[0.02]">
+                            <div class="flex items-center gap-4">
+                                <div class="w-8 h-8 rounded-full bg-pink-500/20 flex items-center justify-center text-pink-400 text-xs">
+                                    <i class="fa-brands fa-instagram"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-medium text-white">dm_kullanici2 (Instagram)</div>
+                                    <div class="text-xs text-gray-500">Konum bilgisi paylaşıldı.</div>
+                                </div>
+                            </div>
+                            <span class="text-xs text-gray-500">1 saat önce</span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Recent Activity List -->
-                <h3 class="font-bold text-lg mb-4">Son Aktiviteler</h3>
-                <div class="bg-[#18181b] rounded-xl border border-white/5 overflow-hidden">
-                    <div class="p-4 border-b border-white/5 flex items-center justify-between hover:bg-white/[0.02]">
-                        <div class="flex items-center gap-4">
-                            <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 text-xs">
-                                <i class="fa-solid fa-phone"></i>
+                <!-- TAB 2: MESSAGES -->
+                <div id="tab-messages" class="dashboard-tab">
+                    <h3 class="font-bold text-lg mb-4">Gelen Kutusu</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 h-[500px]">
+                        <!-- List -->
+                        <div class="bg-[#18181b] rounded-xl border border-white/5 overflow-hidden flex flex-col">
+                            <div class="p-3 border-b border-white/5 bg-white/[0.02]">
+                                <input type="text" placeholder="Ara..." class="w-full bg-black/20 border border-white/10 rounded px-3 py-2 text-xs text-white outline-none focus:border-indigo-500">
                             </div>
-                            <div>
-                                <div class="text-sm font-medium text-white">Gelen Arama (+90 532 444...)</div>
-                                <div class="text-xs text-gray-500">YEKA randevu oluşturdu - 14:00</div>
-                            </div>
-                        </div>
-                        <span class="text-xs text-gray-500">2 dk önce</span>
-                    </div>
-                    <div class="p-4 border-b border-white/5 flex items-center justify-between hover:bg-white/[0.02]">
-                        <div class="flex items-center gap-4">
-                            <div class="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 text-xs">
-                                <i class="fa-brands fa-whatsapp"></i>
-                            </div>
-                            <div>
-                                <div class="text-sm font-medium text-white">Ayşe Y. (WhatsApp)</div>
-                                <div class="text-xs text-gray-500">Fiyat listesi gönderildi.</div>
-                            </div>
-                        </div>
-                        <span class="text-xs text-gray-500">15 dk önce</span>
-                    </div>
-                    <div class="p-4 flex items-center justify-between hover:bg-white/[0.02]">
-                        <div class="flex items-center gap-4">
-                            <div class="w-8 h-8 rounded-full bg-pink-500/20 flex items-center justify-center text-pink-400 text-xs">
-                                <i class="fa-brands fa-instagram"></i>
-                            </div>
-                            <div>
-                                <div class="text-sm font-medium text-white">dm_kullanici2 (Instagram)</div>
-                                <div class="text-xs text-gray-500">Konum bilgisi paylaşıldı.</div>
+                            <div class="overflow-y-auto flex-1">
+                                <div class="p-3 border-b border-white/5 hover:bg-white/[0.04] cursor-pointer bg-white/[0.04]">
+                                    <div class="flex items-center justify-between mb-1">
+                                        <span class="font-bold text-sm">Ayşe Yılmaz</span>
+                                        <span class="text-[10px] text-gray-500">10:42</span>
+                                    </div>
+                                    <p class="text-xs text-gray-400 truncate">Teşekkürler, yarın geliyorum.</p>
+                                </div>
+                                <div class="p-3 border-b border-white/5 hover:bg-white/[0.04] cursor-pointer">
+                                    <div class="flex items-center justify-between mb-1">
+                                        <span class="font-bold text-sm">Mehmet Demir</span>
+                                        <span class="text-[10px] text-gray-500">Dün</span>
+                                    </div>
+                                    <p class="text-xs text-gray-400 truncate">Fiyat listeniz güncel mi?</p>
+                                </div>
+                                <div class="p-3 border-b border-white/5 hover:bg-white/[0.04] cursor-pointer">
+                                    <div class="flex items-center justify-between mb-1">
+                                        <span class="font-bold text-sm text-gray-400">Instagram Kullanıcısı</span>
+                                        <span class="text-[10px] text-gray-500">Dün</span>
+                                    </div>
+                                    <p class="text-xs text-gray-400 truncate">Adres tarifini atabilir misiniz?</p>
+                                </div>
                             </div>
                         </div>
-                        <span class="text-xs text-gray-500">1 saat önce</span>
+                        
+                        <!-- Chat View -->
+                        <div class="md:col-span-2 bg-[#18181b] rounded-xl border border-white/5 flex flex-col">
+                            <div class="h-12 border-b border-white/5 flex items-center px-4 justify-between">
+                                <span class="font-bold text-sm">Ayşe Yılmaz</span>
+                                <div class="flex gap-2 text-gray-500 text-xs">
+                                    <i class="fa-solid fa-phone hover:text-white cursor-pointer"></i>
+                                    <i class="fa-solid fa-video hover:text-white cursor-pointer"></i>
+                                </div>
+                            </div>
+                            <div class="flex-1 p-4 space-y-4 overflow-y-auto">
+                                <div class="flex justify-end">
+                                    <div class="bg-indigo-600 px-3 py-2 rounded-lg rounded-tr-none text-xs text-white max-w-[80%]">
+                                        Merhaba Ayşe Hanım, randevunuz yarın 14:00 için oluşturuldu.
+                                    </div>
+                                </div>
+                                <div class="flex justify-start">
+                                    <div class="bg-white/10 px-3 py-2 rounded-lg rounded-tl-none text-xs text-gray-200 max-w-[80%]">
+                                        Teşekkürler, yarın geliyorum.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-3 border-t border-white/5">
+                                <input type="text" placeholder="Bir mesaj yaz..." class="w-full bg-black/20 border border-white/10 rounded px-3 py-2 text-sm text-white outline-none focus:border-indigo-500">
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+                <!-- TAB 3: VOICE RECORDS -->
+                <div id="tab-voice" class="dashboard-tab">
+                    <h3 class="font-bold text-lg mb-4">Çağrı Kayıtları</h3>
+                    <div class="bg-[#18181b] rounded-xl border border-white/5 overflow-hidden">
+                        <!-- Table Header -->
+                        <div class="grid grid-cols-12 gap-4 p-4 border-b border-white/10 bg-white/[0.02] text-xs font-bold text-gray-400 uppercase">
+                            <div class="col-span-3">Arayan</div>
+                            <div class="col-span-2">Durum</div>
+                            <div class="col-span-2">Süre</div>
+                            <div class="col-span-3">Özet</div>
+                            <div class="col-span-2 text-right">İşlem</div>
+                        </div>
+                        <!-- Items -->
+                        <div class="grid grid-cols-12 gap-4 p-4 border-b border-white/5 items-center hover:bg-white/[0.02]">
+                            <div class="col-span-3 flex items-center gap-3">
+                                <div class="w-8 h-8 rounded bg-blue-500/20 flex items-center justify-center text-blue-400"><i class="fa-solid fa-phone"></i></div>
+                                <div>
+                                    <div class="font-bold text-sm">+90 532 123 45 67</div>
+                                    <div class="text-[10px] text-gray-500">Bugün, 14:30</div>
+                                </div>
+                            </div>
+                            <div class="col-span-2"><span class="bg-green-500/10 text-green-400 px-2 py-1 rounded text-[10px] font-bold">Randevu Alındı</span></div>
+                            <div class="col-span-2 text-sm text-gray-400">01:45</div>
+                            <div class="col-span-3 text-xs text-gray-500 truncate">Saç kesimi için fiyat sordu ve randevu aldı.</div>
+                            <div class="col-span-2 text-right">
+                                <button class="text-xs bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded transition text-white">
+                                    <i class="fa-solid fa-play mr-1"></i> Dinle
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-12 gap-4 p-4 border-b border-white/5 items-center hover:bg-white/[0.02]">
+                            <div class="col-span-3 flex items-center gap-3">
+                                <div class="w-8 h-8 rounded bg-red-500/20 flex items-center justify-center text-red-400"><i class="fa-solid fa-phone-slash"></i></div>
+                                <div>
+                                    <div class="font-bold text-sm">+90 555 987 65 43</div>
+                                    <div class="text-[10px] text-gray-500">Dün, 19:15</div>
+                                </div>
+                            </div>
+                            <div class="col-span-2"><span class="bg-red-500/10 text-red-400 px-2 py-1 rounded text-[10px] font-bold">Cevapsız</span></div>
+                            <div class="col-span-2 text-sm text-gray-400">-</div>
+                            <div class="col-span-3 text-xs text-gray-500 truncate">Mesai dışı arama. Otomatik SMS gönderildi.</div>
+                            <div class="col-span-2 text-right">
+                                <button class="text-xs bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded transition text-white">
+                                    <i class="fa-solid fa-phone mr-1"></i> Ara
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 4: CALENDAR -->
+                <div id="tab-calendar" class="dashboard-tab">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-bold text-lg">Takvim</h3>
+                        <div class="flex gap-2">
+                            <button class="px-3 py-1 bg-white/10 rounded text-xs">Günlük</button>
+                            <button class="px-3 py-1 bg-indigo-600 rounded text-xs text-white">Haftalık</button>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-7 gap-px bg-white/10 border border-white/10 rounded-lg overflow-hidden">
+                        <!-- Headers -->
+                        <div class="bg-[#18181b] p-3 text-center text-xs text-gray-400">Pzt</div>
+                        <div class="bg-[#18181b] p-3 text-center text-xs text-gray-400">Sal</div>
+                        <div class="bg-[#18181b] p-3 text-center text-xs text-gray-400">Çar</div>
+                        <div class="bg-[#18181b] p-3 text-center text-xs text-gray-400">Per</div>
+                        <div class="bg-[#18181b] p-3 text-center text-xs text-gray-400">Cum</div>
+                        <div class="bg-[#18181b] p-3 text-center text-xs text-gray-400">Cmt</div>
+                        <div class="bg-[#18181b] p-3 text-center text-xs text-gray-400">Paz</div>
+
+                        <!-- Days Row 1 -->
+                        <div class="bg-[#0c0c0e] h-32 p-2 hover:bg-white/5 transition relative">
+                            <span class="text-gray-500 text-xs">12</span>
+                        </div>
+                        <div class="bg-[#0c0c0e] h-32 p-2 hover:bg-white/5 transition relative">
+                            <span class="text-gray-500 text-xs">13</span>
+                            <div class="mt-2 bg-indigo-500/20 text-indigo-300 text-[10px] p-1 rounded border-l-2 border-indigo-500 truncate">
+                                14:00 - Saç Kesimi
+                            </div>
+                        </div>
+                        <div class="bg-[#0c0c0e] h-32 p-2 hover:bg-white/5 transition relative">
+                            <span class="text-gray-500 text-xs">14</span>
+                        </div>
+                        <div class="bg-[#0c0c0e] h-32 p-2 hover:bg-white/5 transition relative">
+                            <span class="text-gray-500 text-xs">15</span>
+                            <div class="mt-2 bg-pink-500/20 text-pink-300 text-[10px] p-1 rounded border-l-2 border-pink-500 truncate">
+                                10:00 - Manikür
+                            </div>
+                             <div class="mt-1 bg-blue-500/20 text-blue-300 text-[10px] p-1 rounded border-l-2 border-blue-500 truncate">
+                                15:30 - Boya
+                            </div>
+                        </div>
+                        <div class="bg-[#0c0c0e] h-32 p-2 hover:bg-white/5 transition relative">
+                            <span class="text-white text-xs font-bold">16</span>
+                            <div class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full"></div>
+                        </div>
+                        <div class="bg-[#0c0c0e] h-32 p-2 hover:bg-white/5 transition relative">
+                            <span class="text-gray-500 text-xs">17</span>
+                        </div>
+                        <div class="bg-[#0c0c0e] h-32 p-2 hover:bg-white/5 transition relative">
+                            <span class="text-gray-500 text-xs">18</span>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -601,6 +785,31 @@
                 
                 // Scroll to top
                 window.scrollTo(0, 0);
+            }
+        }
+        
+        // Dashboard Tab Switcher Logic
+        function switchTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.dashboard-tab').forEach(el => el.classList.remove('active'));
+            // Show target tab
+            const targetTab = document.getElementById('tab-' + tabId);
+            if (targetTab) {
+                targetTab.classList.add('active');
+            }
+            
+            // Update Sidebar active state styles
+            document.querySelectorAll('.sidebar-item').forEach(el => {
+                // Remove active classes
+                el.classList.remove('bg-indigo-500/10', 'text-indigo-400');
+                // Add inactive classes
+                el.classList.add('text-gray-400', 'hover:bg-white/5');
+            });
+            
+            const navItem = document.getElementById('nav-' + tabId);
+            if(navItem) {
+                navItem.classList.remove('text-gray-400', 'hover:bg-white/5');
+                navItem.classList.add('bg-indigo-500/10', 'text-indigo-400');
             }
         }
 
